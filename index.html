@@ -9,321 +9,776 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- AOS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- ToastrJS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #E65100; /* Naranja oscuro del logo */
-            --secondary-color: #FFA000; /* Naranja dorado del logo */
-            --accent-color: #D32F2F; /* Rojo del logo */
-            --light-color: #FFF8E1; /* Beige claro que combina */
-            --dark-color: #BF360C; /* Naranja más oscuro para hover */
+            --primary-color: #E65100;
+            --secondary-color: #FFA000;
+            --accent-color: #D32F2F;
+            --light-color: #FFF8E1;
+            --dark-color: #BF360C;
             --navbar-gradient: linear-gradient(135deg, #FFA000 0%, #E65100 100%);
-            --logo-highlight: #FFC107; /* Dorado brillante del logo */
-            --text-color: #3E2723; /* Marrón oscuro para texto */
+            --logo-highlight: #FFC107;
+            --text-color: #3E2723;
         }
-        
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
             background-color: var(--light-color);
             color: var(--text-color);
+            overflow-x: hidden;
         }
-        
+
+        /* ===== NAVBAR ===== */
         .navbar {
             background: var(--navbar-gradient) !important;
-            padding: 0.5rem 1rem;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-            border-bottom: 3px solid var(--accent-color);
+            padding: 0.7rem 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            transition: all 0.4s ease;
+            border-bottom: none;
         }
-        
+
         .navbar.scrolled {
-            padding: 0.3rem 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            padding: 0.3rem 0;
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
         }
-        
+
         .navbar-brand {
-            font-weight: 800;
-            font-size: 1.8rem;
+            font-weight: 900;
+            font-size: 1.6rem;
             display: flex;
             align-items: center;
-            color: var(--light-color) !important;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 8px 20px;
-            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: #fff !important;
+            letter-spacing: -0.5px;
+            padding: 6px 18px;
+            background: rgba(255,255,255,0.12);
             border-radius: 50px;
-            border: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            letter-spacing: 1px;
-        }
-        
-        .navbar-brand:hover {
-            color: var(--light-color) !important;
-            background: linear-gradient(45deg, var(--secondary-color), var(--primary-color));
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-        }
-        
-        .navbar-brand:hover img {
-            filter: brightness(0) invert(1);
-        }
-        
-        .navbar-brand img {
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 50px;
+        }
+
+        .navbar-brand:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .navbar-brand img {
+            transition: all 0.4s ease;
+            height: 44px;
             width: auto;
             margin-right: 10px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
 
-        footer.bg-dark {
-            background: var(--navbar-gradient) !important;
-            border-top: 3px solid var(--accent-color);
+        .navbar-brand:hover img {
+            transform: rotate(-5deg) scale(1.05);
         }
 
-        .modal-header,
-        .card-header {
-            background: var(--navbar-gradient) !important;
-            color: var(--light-color) !important;
-            border-bottom: 3px solid var(--accent-color) !important;
+        .nav-link {
+            color: rgba(255,255,255,0.9) !important;
+            font-weight: 600;
+            padding: 0.5rem 1.1rem !important;
+            margin: 0 0.15rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            position: relative;
         }
 
-        .modal-header .btn-close {
-            filter: invert(1) grayscale(100%) brightness(200%);
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            width: 0;
+            height: 2.5px;
+            background: #fff;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+            border-radius: 2px;
+            opacity: 0;
+        }
+
+        .nav-link:hover::before,
+        .nav-link.active::before {
+            width: 60%;
             opacity: 1;
         }
 
-        .btn-whatsapp {
-            background: #25D366;
-            border-color: #25D366;
-            color: #ffffff;
+        .nav-link.active {
+            background: rgba(255,255,255,0.15) !important;
             font-weight: 700;
-            text-transform: none;
-            letter-spacing: 0.2px;
+        }
+
+        .nav-link:hover {
+            color: #fff !important;
+            background: rgba(255,255,255,0.1);
+        }
+
+        #contador-carrito {
+            font-size: 0.65rem;
+            padding: 0.2rem 0.4rem;
+            min-width: 18px;
+        }
+
+        /* ===== CAROUSEL ===== */
+        .carousel-item {
+            position: relative;
+        }
+
+        .carousel-item::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 1;
+        }
+
+        .carousel-item img {
+            height: 75vh;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            z-index: 2;
+            background: rgba(0,0,0,0.45);
+            backdrop-filter: blur(8px);
+            padding: 28px 35px;
+            border-radius: 20px;
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            bottom: 25%;
+            width: auto;
+            max-width: 700px;
+            border: 1px solid rgba(255,255,255,0.08);
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(30px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .carousel-caption h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-shadow: none;
+            letter-spacing: -0.5px;
+        }
+
+        .carousel-caption p {
+            font-size: 1.15rem;
+            font-weight: 300;
+            text-shadow: none;
+            opacity: 0.9;
+        }
+
+        .carousel-indicators button {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            border: 2px solid rgba(255,255,255,0.5);
+            background: transparent;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-indicators button.active {
+            background: #fff;
+            border-color: #fff;
+            width: 30px;
+            border-radius: 5px;
+        }
+
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            padding: 25px;
+            background-size: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-control-prev:hover .carousel-control-prev-icon,
+        .carousel-control-next:hover .carousel-control-next-icon {
+            background-color: rgba(0,0,0,0.5);
+            transform: scale(1.1);
+        }
+
+        /* ===== SECTION TITLES ===== */
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 45px;
+            color: var(--primary-color);
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 2rem;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 4px;
+            background: var(--accent-color);
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            bottom: -10px;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .section-title.text-center::before,
+        .section-title.text-center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* ===== PRODUCT CARDS ===== */
+        #productos .card {
+            border: none;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            margin-bottom: 25px;
+            background: #fff;
+            position: relative;
+        }
+
+        #productos .card.in-cart {
+            box-shadow: 0 8px 30px rgba(211,47,47,0.15);
+            border: 2px solid var(--accent-color);
+        }
+
+        #productos .card.in-cart .btn-solicitar {
+            background: linear-gradient(135deg, #43A047, #2E7D32);
+        }
+
+        #productos .card.in-cart .btn-solicitar:hover {
+            background: linear-gradient(135deg, #2E7D32, #1B5E20);
+            box-shadow: 0 10px 25px rgba(46,125,50,0.3);
+        }
+
+        #productos .card:hover {
+            transform: translateY(-12px);
+            box-shadow: 0 20px 50px rgba(211, 47, 47, 0.12);
+        }
+
+        #productos .card.in-cart:hover {
+            box-shadow: 0 20px 50px rgba(46,125,50,0.15);
+        }
+
+        #productos .card-img-top {
+            height: 220px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: all 0.6s ease;
+        }
+
+        #productos .card:hover .card-img-top {
+            transform: scale(1.08);
+        }
+
+        #productos .card-body {
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        #productos .card-title {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        #productos .card-text {
+            color: rgba(62,39,35,0.6);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .price-tag {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: block;
+            text-align: center;
+            margin-top: 6px;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--accent-color);
+            color: #fff;
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: none;
+            align-items: center;
+            gap: 5px;
+            z-index: 5;
+            box-shadow: 0 4px 12px rgba(211,47,47,0.3);
+            animation: badgePop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .cart-badge.show {
+            display: inline-flex;
+        }
+
+        @keyframes badgePop {
+            0% { transform: scale(0); }
+            60% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .product-check {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 32px;
+            height: 32px;
+            background: #43A047;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 1rem;
+            z-index: 5;
+            box-shadow: 0 4px 12px rgba(67,160,71,0.3);
+            animation: checkPop 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .product-check.show {
+            display: flex;
+        }
+
+        @keyframes checkPop {
+            0% { transform: scale(0) rotate(-90deg); }
+            60% { transform: scale(1.2) rotate(10deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-color), #C62828);
+            border: none;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            padding: 0.65rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            font-size: 0.85rem;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #C62828, var(--dark-color));
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(211, 47, 47, 0.3);
+            color: #fff;
+        }
+
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            background: transparent;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            border-radius: 50px;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #25D366, #1ebe5d);
+            border: none;
+            color: #fff;
+            font-weight: 700;
             border-radius: 14px;
-            padding: 0.75rem 1rem;
-            box-shadow: 0 10px 20px rgba(37, 211, 102, 0.25);
+            padding: 0.8rem 1rem;
+            box-shadow: 0 10px 25px rgba(37, 211, 102, 0.25);
+            transition: all 0.4s ease;
         }
 
         .btn-whatsapp:hover {
-            background: #1ebe5d;
-            border-color: #1ebe5d;
-            transform: translateY(-2px);
-            box-shadow: 0 14px 28px rgba(37, 211, 102, 0.28);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(37, 211, 102, 0.35);
+            color: #fff;
         }
 
-        .btn-whatsapp:focus {
-            box-shadow: 0 0 0 0.25rem rgba(37, 211, 102, 0.35);
+        /* ===== ABOUT SECTION ===== */
+        .bg-custom {
+            background: linear-gradient(180deg, var(--light-color) 0%, #fff 100%);
+        }
+
+        #nosotros .list-unstyled li {
+            padding: 8px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #nosotros .list-unstyled i {
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        #nosotros img {
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            transition: all 0.5s ease;
+        }
+
+        #nosotros img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.15);
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        #contacto .card {
+            border: none;
+            border-radius: 28px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        #contacto .card-body {
+            background: #fff;
+        }
+
+        .contact-info i {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 12px;
+            background: rgba(230,81,0,0.08);
+            padding: 12px;
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .contact-info:hover i {
+            background: rgba(230,81,0,0.15);
+            transform: translateY(-3px) scale(1.05);
+        }
+
+        .contact-info h5 {
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+
+        .contact-info p {
+            font-size: 0.9rem;
         }
 
         .contact-form {
-            background: rgba(255, 248, 225, 0.6);
-            border: 1px solid rgba(230, 81, 0, 0.18);
-            border-radius: 18px;
-            padding: 18px;
+            background: rgba(255,248,225,0.4);
+            border: 1px solid rgba(230,81,0,0.12);
+            border-radius: 24px;
+            padding: 32px;
+            animation: formSlideUp 0.6s ease;
+        }
+
+        @keyframes formSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .contact-form .form-control {
-            border-radius: 14px;
-            border: 1px solid rgba(62, 39, 35, 0.18);
+            border-radius: 16px;
+            border: 2px solid rgba(62,39,35,0.1);
+            padding: 1.2rem 1.2rem 1.2rem 1.2rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fff;
+            min-height: 56px;
         }
 
         .contact-form .form-control:focus {
-            border-color: rgba(211, 47, 47, 0.6);
-            box-shadow: 0 0 0 0.25rem rgba(211, 47, 47, 0.12);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 5px rgba(230,81,0,0.1);
+            transform: translateY(-1px);
+        }
+
+        .contact-form .form-floating > label {
+            padding-left: 1.2rem;
+            padding-top: 0.2rem;
+            color: rgba(62,39,35,0.45);
+            font-size: 0.95rem;
+        }
+
+        .contact-form .form-floating > .form-control:focus ~ label,
+        .contact-form .form-floating > .form-control:not(:placeholder-shown) ~ label {
+            transform: scale(0.85) translateY(-0.8rem) translateX(0.15rem);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .contact-form textarea.form-control {
+            min-height: 140px !important;
         }
 
         .contact-form .btn-primary {
             width: 100%;
+            padding: 1rem;
+            font-size: 1.05rem;
+            border-radius: 16px;
+            letter-spacing: 1px;
         }
 
+        .contact-form .btn-primary i {
+            font-size: 1.2rem;
+        }
+
+        /* Toastr custom */
+        .toast-success {
+            background: linear-gradient(135deg, #43A047, #2E7D32) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 30px rgba(46,125,50,0.2) !important;
+        }
+        .toast-error {
+            background: linear-gradient(135deg, var(--accent-color), #B71C1C) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 30px rgba(211,47,47,0.2) !important;
+        }
+        .toast-info {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color)) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 30px rgba(230,81,0,0.2) !important;
+        }
+        .toast-warning {
+            background: linear-gradient(135deg, #FFA000, #E65100) !important;
+            border-radius: 12px !important;
+            box-shadow: 0 8px 30px rgba(255,160,0,0.2) !important;
+        }
+        #toast-container > .toast {
+            background-image: none !important;
+            padding: 15px 20px 15px 50px !important;
+            min-height: 60px;
+        }
+        #toast-container > .toast::before {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+        #toast-container > .toast-success::before { content: "\f00c"; }
+        #toast-container > .toast-error::before { content: "\f071"; }
+        #toast-container > .toast-info::before { content: "\f05a"; }
+        #toast-container > .toast-warning::before { content: "\f06a"; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: linear-gradient(135deg, #E65100 0%, #BF360C 100%) !important;
+            border-top: none;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color), var(--secondary-color));
+        }
+
+        footer h5 {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        footer .social-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            margin: 0 4px;
+            font-size: 1.1rem;
+        }
+
+        footer .social-icon:hover {
+            background: var(--secondary-color);
+            color: var(--text-color);
+            transform: translateY(-3px);
+        }
+
+        /* ===== OFFCANVAS CART ===== */
         #carritoOffcanvas .offcanvas-header {
             background: var(--navbar-gradient);
             color: var(--light-color);
-            border-bottom: 3px solid var(--accent-color);
+            border-bottom: none;
+            padding: 1.2rem 1.5rem;
         }
 
         #carritoOffcanvas .offcanvas-title {
-            color: var(--light-color);
             font-weight: 800;
             letter-spacing: 0.5px;
         }
 
         #carritoOffcanvas .btn-close {
             filter: invert(1) grayscale(100%) brightness(200%);
-            opacity: 1;
+            opacity: 0.8;
         }
 
         #carritoOffcanvas .offcanvas-body {
             background: var(--light-color);
-        }
-
-        #carritoOffcanvas .border-top {
-            border-top: 2px dashed rgba(191, 54, 12, 0.35) !important;
+            padding: 1.5rem;
         }
 
         #carritoOffcanvas #lista-carrito .card {
-            border: 1px solid rgba(230, 81, 0, 0.18);
+            border: 1px solid rgba(230,81,0,0.1);
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 8px 18px rgba(0,0,0,0.06);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+            background: #fff;
         }
 
         #carritoOffcanvas #lista-carrito .card-body {
-            background: rgba(255, 255, 255, 0.7);
+            padding: 0.8rem 1rem !important;
         }
 
         #carritoOffcanvas #lista-carrito h6 {
+            font-weight: 700;
             color: var(--text-color);
+        }
+
+        #carritoOffcanvas .border-top {
+            border-top: 2px dashed rgba(191,54,12,0.2) !important;
+            padding-top: 1.2rem !important;
+        }
+
+        #total-carrito {
+            color: var(--accent-color);
             font-weight: 800;
         }
 
-        #productos .card-img-top {
-            cursor: pointer;
+        /* ===== MODAL ===== */
+        .modal-header {
+            background: var(--navbar-gradient) !important;
+            color: var(--light-color) !important;
+            border-bottom: none !important;
+            border-radius: 0;
         }
 
-        #productos .card-img-top:hover {
-            filter: brightness(0.95);
+        .modal-header .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+            opacity: 0.8;
         }
-        
-        .nav-link {
-            color: var(--light-color) !important;
-            font-weight: 600;
-            padding: 0.7rem 1.2rem !important;
-            margin: 0 0.3rem;
-            border-radius: 50px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 0.5px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
+
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            overflow: hidden;
         }
-        
-        .nav-link.active {
-            background: var(--accent-color) !important;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-            font-weight: 700;
-        }
-        
-        .nav-link:hover {
-            color: var(--light-color) !important;
-            background: var(--accent-color);
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-        }
-        
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 3px;
-            bottom: 5px;
-            left: 50%;
-            background-color: var(--light-color);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateX(-50%);
-            border-radius: 2px;
-        }
-        
-        .btn-primary {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            transition: all 0.3s ease;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            display: inline-flex;
+
+        /* ===== FLOATING WHATSAPP ===== */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366, #128C7E);
+            border-radius: 50%;
+            display: flex;
             align-items: center;
             justify-content: center;
+            color: #fff;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            animation: pulseWhatsApp 2s infinite;
         }
-        
-        .btn-primary:hover {
-            background-color: var(--dark-color);
-            border-color: var(--dark-color);
-            transform: translateY(-3px) scale(1.05);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+
+        @keyframes pulseWhatsApp {
+            0% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 8px 40px rgba(37, 211, 102, 0.6); }
+            100% { box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4); }
         }
-        
-        .btn-outline-primary {
-            color: var(--primary-color);
-            border-color: var(--primary-color);
+
+        .whatsapp-float:hover {
+            transform: scale(1.1) rotate(-5deg);
+            color: #fff;
+            box-shadow: 0 12px 45px rgba(37, 211, 102, 0.5);
         }
-        
-        .btn-outline-primary:hover {
-            background-color: var(--primary-color);
-            border-color: var(--primary-color);
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 991.98px) {
+            .navbar-brand { font-size: 1.3rem; padding: 5px 14px; }
+            .navbar-brand img { height: 36px; }
+            .nav-link { padding: 0.5rem 1rem !important; margin: 2px 0; text-align: center; }
+            .nav-link::before { display: none; }
         }
-        
-        .carousel-item img {
-            height: 70vh;
-            object-fit: cover;
+
+        @media (max-width: 767.98px) {
+            .carousel-item img { height: 55vh; }
+            .carousel-caption { padding: 18px 20px; bottom: 20%; max-width: 90%; }
+            .carousel-caption h2 { font-size: 1.6rem; }
+            .carousel-caption p { font-size: 0.95rem; }
+            .section-title { font-size: 1.5rem; }
+            #productos .card-img-top { height: 180px; }
+            #contacto .card-body { padding: 1.5rem !important; }
+            .contact-form { padding: 16px; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 1.5rem; bottom: 18px; right: 18px; }
         }
-        
-        .card {
-            transition: transform 0.3s;
-            margin-bottom: 20px;
-        }
-        
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        
-        .section-title {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 40px;
-            color: var(--primary-color);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .section-title:after {
-            content: '';
-            position: absolute;
-            width: 70%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
-            bottom: -12px;
-            left: 0;
-            border-radius: 2px;
-        }
-        
-        .bg-custom {
-            background-color: var(--light-color);
-        }
-        
-        .contact-info i {
-            color: var(--primary-color);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
-        
-        .carousel-caption {
-            background-color: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-            border-radius: 10px;
-            left: 50%;
-            right: auto;
-            transform: translateX(-50%);
-            bottom: 30%;
-            width: 80%;
-            max-width: 800px;
-        }
-        
-        .carousel-caption h2 {
-            font-size: 2.5rem;
-            font-weight: 700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        
-        .carousel-caption p {
-            font-size: 1.25rem;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+
+        @media (max-width: 575.98px) {
+            .carousel-item img { height: 45vh; }
+            .carousel-caption { padding: 14px 16px; }
+            .carousel-caption h2 { font-size: 1.3rem; }
+            #productos .card-img-top { height: 160px; }
         }
     </style>
 </head>
@@ -366,7 +821,7 @@
     </nav>
 
     <!-- Carousel -->
-    <div id="inicio" class="carousel slide" data-bs-ride="carousel">
+    <div id="inicio" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4500">
         <div class="carousel-indicators">
             <button type="button" data-bs-target="#inicio" data-bs-slide-to="0" class="active"></button>
             <button type="button" data-bs-target="#inicio" data-bs-slide-to="1"></button>
@@ -380,42 +835,42 @@
                 <img src="img/13_004_900x.webp" class="d-block w-100" alt="Variedad de botanas">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Gran Variedad de Botanas</h2>
-                    <p>Para todos los gustos y ocasiones</p>
+                    <p class="mb-0">Para todos los gustos y ocasiones</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="img/325106d7b58a929c98b891707f09bca1.jpg" class="d-block w-100" alt="Botanas Especiales">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Botanas Especiales</h2>
-                    <p>Sabores únicos que deleitarán tu paladar</p>
+                    <p class="mb-0">Sabores únicos que deleitarán tu paladar</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="img/871c93011fb9c1ea7c8a7aad4a74c5af.jpg" class="d-block w-100" alt="Botanas Mixtas">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Mezclas Exclusivas</h2>
-                    <p>La combinación perfecta de sabores</p>
+                    <p class="mb-0">La combinación perfecta de sabores</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="img/be5aee5184f476e63ac1ddba578bf77f.jpg" class="d-block w-100" alt="Botanas Clásicas">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Sabores Clásicos</h2>
-                    <p>El auténtico sabor de siempre</p>
+                    <p class="mb-0">El auténtico sabor de siempre</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="img/botanas-de-tiendita.jpg" class="d-block w-100" alt="Nuestra Selección">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Amplia Selección</h2>
-                    <p>Los mejores productos para ti</p>
+                    <p class="mb-0">Los mejores productos para ti</p>
                 </div>
             </div>
             <div class="carousel-item">
                 <img src="img/cacahuate-pepita-salado.jpg" class="d-block w-100" alt="Cacahuates">
                 <div class="carousel-caption d-none d-md-block">
                     <h2>Cacahuates Especiales</h2>
-                    <p>Crujientes y llenos de sabor</p>
+                    <p class="mb-0">Crujientes y llenos de sabor</p>
                 </div>
             </div>
         </div>
@@ -432,141 +887,156 @@
     <!-- Productos -->
     <section class="py-5" id="productos">
         <div class="container">
-            <h2 class="text-center section-title">Nuestros Productos</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="img/13_004_900x.webp" class="card-img-top" alt="Botanas Variadas">
+            <h2 class="text-center section-title" data-aos="fade-down">Nuestros Productos</h2>
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                    <div class="card h-100" data-nombre="Botanas Variadas">
+                        <span class="product-check"><i class="fas fa-check"></i></span>
+                        <span class="cart-badge"><i class="fas fa-shopping-cart"></i> <span class="count">0</span></span>
+                        <div class="overflow-hidden">
+                            <img src="img/13_004_900x.webp" class="card-img-top" alt="Botanas Variadas">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Botanas Variadas</h5>
                             <p class="card-text">Una amplia selección de botanas para todos los gustos.</p>
                             <div class="mt-auto">
-                                <div class="d-flex flex-column">
-                                    <button class="btn btn-primary btn-solicitar" data-precio="29.50">
-                                        <i class="bi bi-cart-plus me-1"></i> Agregar
-                                    </button>
-                                    <span class="text-center mt-1 fw-bold">$29.50 MXN</span>
-                                </div>
+                                <button class="btn btn-primary w-100 btn-solicitar" data-precio="29.50">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                                <span class="price-tag">$29.50 MXN</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="img/325106d7b58a929c98b891707f09bca1.jpg" class="card-img-top" alt="Botanas Especiales">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card h-100" data-nombre="Botanas Especiales">
+                        <span class="product-check"><i class="fas fa-check"></i></span>
+                        <span class="cart-badge"><i class="fas fa-shopping-cart"></i> <span class="count">0</span></span>
+                        <div class="overflow-hidden">
+                            <img src="img/325106d7b58a929c98b891707f09bca1.jpg" class="card-img-top" alt="Botanas Especiales">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Botanas Especiales</h5>
                             <p class="card-text">Nuestras especialidades para los paladares más exigentes.</p>
                             <div class="mt-auto">
-                                <div class="d-flex flex-column">
-                                    <button class="btn btn-primary btn-solicitar" data-precio="29.50">
-                                        <i class="bi bi-cart-plus me-1"></i> Agregar
-                                    </button>
-                                    <span class="text-center mt-1 fw-bold">$29.50 MXN</span>
-                                </div>
+                                <button class="btn btn-primary w-100 btn-solicitar" data-precio="29.50">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                                <span class="price-tag">$29.50 MXN</span>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="img/be5aee5184f476e63ac1ddba578bf77f.jpg" class="card-img-top" alt="Botanas Clásicas">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card h-100" data-nombre="Botanas Clásicas">
+                        <span class="product-check"><i class="fas fa-check"></i></span>
+                        <span class="cart-badge"><i class="fas fa-shopping-cart"></i> <span class="count">0</span></span>
+                        <div class="overflow-hidden">
+                            <img src="img/be5aee5184f476e63ac1ddba578bf77f.jpg" class="card-img-top" alt="Botanas Clásicas">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Botanas Clásicas</h5>
                             <p class="card-text">Los sabores tradicionales que siempre te han gustado.</p>
                             <div class="mt-auto">
-                                <div class="d-flex flex-column">
-                                    <button class="btn btn-primary btn-solicitar" data-precio="29.50">
-                                        <i class="bi bi-cart-plus me-1"></i> Agregar
-                                    </button>
-                                    <span class="text-center mt-1 fw-bold">$29.50 MXN</span>
-                                </div>
+                                <button class="btn btn-primary w-100 btn-solicitar" data-precio="29.50">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                                <span class="price-tag">$29.50 MXN</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="img/botanas-de-tiendita.jpg" class="card-img-top" alt="Nuestra Selección">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                    <div class="card h-100" data-nombre="Nuestra Selección">
+                        <span class="product-check"><i class="fas fa-check"></i></span>
+                        <span class="cart-badge"><i class="fas fa-shopping-cart"></i> <span class="count">0</span></span>
+                        <div class="overflow-hidden">
+                            <img src="img/botanas-de-tiendita.jpg" class="card-img-top" alt="Nuestra Selección">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Nuestra Selección</h5>
                             <p class="card-text">Los mejores productos seleccionados para ti.</p>
                             <div class="mt-auto">
-                                <div class="d-flex flex-column">
-                                    <button class="btn btn-primary btn-solicitar" data-precio="29.50">
-                                        <i class="bi bi-cart-plus me-1"></i> Agregar
-                                    </button>
-                                    <span class="text-center mt-1 fw-bold">$29.50 MXN</span>
-                                </div>
+                                <button class="btn btn-primary w-100 btn-solicitar" data-precio="29.50">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                                <span class="price-tag">$29.50 MXN</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="img/cacahuate-pepita-salado.jpg" class="card-img-top" alt="Cacahuates Especiales">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card h-100" data-nombre="Cacahuates Especiales">
+                        <span class="product-check"><i class="fas fa-check"></i></span>
+                        <span class="cart-badge"><i class="fas fa-shopping-cart"></i> <span class="count">0</span></span>
+                        <div class="overflow-hidden">
+                            <img src="img/cacahuate-pepita-salado.jpg" class="card-img-top" alt="Cacahuates Especiales">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Cacahuates Especiales</h5>
                             <p class="card-text">Cacahuates tostados al punto perfecto de sal.</p>
                             <div class="mt-auto">
-                                <div class="d-flex flex-column">
-                                    <button class="btn btn-primary btn-solicitar" data-precio="29.50">
-                                        <i class="bi bi-cart-plus me-1"></i> Agregar
-                                    </button>
-                                    <span class="text-center mt-1 fw-bold">$29.50 MXN</span>
-                                </div>
+                                <button class="btn btn-primary w-100 btn-solicitar" data-precio="29.50">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                                <span class="price-tag">$29.50 MXN</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="img/cacahuates-marinados-golden-nuts-sal-rustica.webp" class="card-img-top" alt="Cacahuates Marinados">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="card h-100" data-nombre="Cacahuates Marinados">
+                        <span class="product-check"><i class="fas fa-check"></i></span>
+                        <span class="cart-badge"><i class="fas fa-shopping-cart"></i> <span class="count">0</span></span>
+                        <div class="overflow-hidden">
+                            <img src="img/cacahuates-marinados-golden-nuts-sal-rustica.webp" class="card-img-top" alt="Cacahuates Marinados">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Cacahuates Marinados</h5>
                             <p class="card-text">Deliciosos cacahuates con un toque especial de sabor.</p>
                             <div class="mt-auto">
-                                <div class="d-flex flex-column">
-                                    <button class="btn btn-primary btn-solicitar" data-precio="29.50">
-                                        <i class="bi bi-cart-plus me-1"></i> Agregar
-                                    </button>
-                                    <span class="text-center mt-1 fw-bold">$29.50 MXN</span>
-                                </div>
+                                <button class="btn btn-primary w-100 btn-solicitar" data-precio="29.50">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                                <span class="price-tag">$29.50 MXN</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="img/f414x232-3342_17081_5422.webp" class="card-img-top" alt="Botanas Premium">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
+                    <div class="card h-100" data-nombre="Botanas Premium">
+                        <span class="product-check"><i class="fas fa-check"></i></span>
+                        <span class="cart-badge"><i class="fas fa-shopping-cart"></i> <span class="count">0</span></span>
+                        <div class="overflow-hidden">
+                            <img src="img/f414x232-3342_17081_5422.webp" class="card-img-top" alt="Botanas Premium">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Botanas Premium</h5>
                             <p class="card-text">Nuestra selección más exclusiva de botanas.</p>
                             <div class="mt-auto">
-                                <div class="d-flex flex-column">
-                                    <button class="btn btn-primary btn-solicitar" data-precio="29.50">
-                                        <i class="bi bi-cart-plus me-1"></i> Agregar
-                                    </button>
-                                    <span class="text-center mt-1 fw-bold">$29.50 MXN</span>
-                                </div>
+                                <button class="btn btn-primary w-100 btn-solicitar" data-precio="29.50">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                                <span class="price-tag">$29.50 MXN</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <img src="img/negocio-botanas-preparadas.jpg" class="card-img-top" alt="Botanas Preparadas">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="card h-100" data-nombre="Botanas Preparadas">
+                        <span class="product-check"><i class="fas fa-check"></i></span>
+                        <span class="cart-badge"><i class="fas fa-shopping-cart"></i> <span class="count">0</span></span>
+                        <div class="overflow-hidden">
+                            <img src="img/negocio-botanas-preparadas.jpg" class="card-img-top" alt="Botanas Preparadas">
+                        </div>
                         <div class="card-body d-flex flex-column">
                             <h5 class="card-title">Botanas Preparadas</h5>
                             <p class="card-text">Preparadas al momento con los mejores ingredientes.</p>
                             <div class="mt-auto">
-                                <div class="d-flex flex-column">
-                                    <button class="btn btn-primary btn-solicitar" data-precio="29.50">
-                                        <i class="bi bi-cart-plus me-1"></i> Agregar
-                                    </button>
-                                    <span class="text-center mt-1 fw-bold">$29.50 MXN</span>
-                                </div>
+                                <button class="btn btn-primary w-100 btn-solicitar" data-precio="29.50">
+                                    <i class="bi bi-cart-plus"></i> Agregar
+                                </button>
+                                <span class="price-tag">$29.50 MXN</span>
                             </div>
                         </div>
                     </div>
@@ -578,20 +1048,20 @@
     <!-- Sobre Nosotros -->
     <section class="py-5 bg-custom" id="nosotros">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-6">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6" data-aos="fade-right">
                     <h2 class="section-title">Sobre Nosotros</h2>
-                    <p>En Botanas Delicias nos dedicamos a ofrecer los mejores productos de botanas con la más alta calidad y los sabores más auténticos. Nuestro compromiso es llevar hasta tu mesa el sabor tradicional que tanto te gusta.</p>
-                    <p>Con años de experiencia en el mercado, hemos perfeccionado nuestras recetas para ofrecerte un producto único que deleitará tu paladar.</p>
-                    <ul class="list-unstyled">
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Ingredientes de la más alta calidad</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Procesos higiénicos garantizados</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Sabores únicos y deliciosos</li>
-                        <li><i class="bi bi-check-circle-fill text-success me-2"></i> Entrega a domicilio disponible</li>
+                    <p style="font-size:1.05rem; line-height:1.8; color:rgba(62,39,35,0.75);">En <strong>Furia Nuts</strong> nos dedicamos a ofrecer los mejores productos de botanas con la más alta calidad y los sabores más auténticos. Nuestro compromiso es llevar hasta tu mesa el sabor tradicional que tanto te gusta.</p>
+                    <p style="font-size:1.05rem; line-height:1.8; color:rgba(62,39,35,0.75);">Con años de experiencia en el mercado, hemos perfeccionado nuestras recetas para ofrecerte un producto único que deleitará tu paladar.</p>
+                    <ul class="list-unstyled mt-4">
+                        <li><i class="bi bi-check-circle-fill" style="color:#43A047;"></i> Ingredientes de la más alta calidad</li>
+                        <li><i class="bi bi-check-circle-fill" style="color:#43A047;"></i> Procesos higiénicos garantizados</li>
+                        <li><i class="bi bi-check-circle-fill" style="color:#43A047;"></i> Sabores únicos y deliciosos</li>
+                        <li><i class="bi bi-check-circle-fill" style="color:#43A047;"></i> Entrega a domicilio disponible</li>
                     </ul>
                 </div>
-                <div class="col-lg-6">
-                    <img src="img/botanas-de-tiendita.jpg" alt="Nuestra Tienda" class="img-fluid rounded shadow">
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="img/botanas-de-tiendita.jpg" alt="Nuestra Tienda" class="img-fluid w-100">
                 </div>
             </div>
         </div>
@@ -600,76 +1070,76 @@
     <!-- Contacto -->
     <section class="py-5" id="contacto">
         <div class="container">
-            <h2 class="text-center section-title">Contáctanos</h2>
-            <div class="row">
+            <h2 class="text-center section-title" data-aos="fade-down">Contáctanos</h2>
+            <div class="row" data-aos="fade-up">
                 <div class="col-lg-9 mx-auto">
-                    <div class="card shadow">
-                        <div class="card-body p-5">
-                            <div class="row text-center">
-                                <div class="col-md-6 mb-4 contact-info">
+                    <div class="card">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="row g-4 text-center">
+                                <div class="col-md-6 col-lg-3 contact-info">
                                     <i class="bi bi-geo-alt-fill"></i>
                                     <h5>Dirección</h5>
-                                    <p class="text-muted">Tehuacan, Puebla</p>
+                                    <p class="text-muted mb-0">Tehuacan, Puebla</p>
                                 </div>
-                                <div class="col-md-6 mb-4 contact-info">
+                                <div class="col-md-6 col-lg-3 contact-info">
                                     <i class="bi bi-telephone-fill"></i>
                                     <h5>Teléfono</h5>
-                                    <div class="dropdown text-start">
-                                        <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Seleccionar número
+                                    <div class="dropdown">
+                                        <button class="btn btn-outline-primary btn-sm dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
+                                            Ver números
                                         </button>
                                         <ul class="dropdown-menu w-100">
-                                            <li><a class="dropdown-item" href="tel:+522211959921">2211959921</a></li>
-                                            <li><a class="dropdown-item" href="tel:+522381271940">2381271940</a></li>
-                                            <li><a class="dropdown-item" href="tel:+522381501369">2381501369</a></li>
+                                            <li><a class="dropdown-item" href="tel:+522211959921">221 195 9921</a></li>
+                                            <li><a class="dropdown-item" href="tel:+522381271940">238 127 1940</a></li>
+                                            <li><a class="dropdown-item" href="tel:+522381501369">238 150 1369</a></li>
                                         </ul>
                                     </div>
-                                    <div class="mt-2 text-start">
-                                        <a class="text-muted text-decoration-none" href="https://walink.co/e7dec1" target="_blank" rel="noopener">
-                                            <i class="fa-brands fa-whatsapp me-2" style="color:#25D366;"></i>WhatsApp: 2381271940
+                                    <div class="mt-2">
+                                        <a class="text-decoration-none small" href="https://walink.co/e7dec1" target="_blank" rel="noopener" style="color:#25D366;">
+                                            <i class="fa-brands fa-whatsapp"></i> WhatsApp: 238 127 1940
                                         </a>
                                     </div>
                                 </div>
-                                <div class="col-md-6 mb-4 contact-info">
+                                <div class="col-md-6 col-lg-3 contact-info">
                                     <i class="bi bi-envelope-fill"></i>
                                     <h5>Email</h5>
-                                    <p class="text-muted">ventas@botanasdelicias.com</p>
+                                    <p class="text-muted mb-0">ventas@botanasdelicias.com</p>
                                 </div>
-                                <div class="col-md-6 mb-4 contact-info">
+                                <div class="col-md-6 col-lg-3 contact-info">
                                     <i class="bi bi-clock-fill"></i>
                                     <h5>Horario</h5>
-                                    <p class="text-muted">Lun-Sáb: 9:00 AM - 8:00 PM</p>
+                                    <p class="text-muted mb-0">Lun-Sáb: 9 AM - 8 PM</p>
                                 </div>
                             </div>
-                            <form class="contact-form mt-3">
-                                <div class="row g-3">
+                            <form class="contact-form mt-4">
+                                <div class="row g-4">
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="contactoNombre" placeholder="Nombre" required>
-                                            <label for="contactoNombre">Nombre</label>
+                                            <input type="text" class="form-control" id="name" placeholder="Nombre" required>
+                                            <label for="name"><i class="far fa-user me-2"></i>Nombre</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="tel" class="form-control" id="contactoTelefono" placeholder="Teléfono" required>
-                                            <label for="contactoTelefono">Teléfono</label>
+                                            <input type="tel" class="form-control" id="phone" placeholder="Teléfono" required>
+                                            <label for="phone"><i class="fas fa-phone-alt me-2"></i>Teléfono</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control" id="contactoEmail" placeholder="Email" required>
-                                            <label for="contactoEmail">Email</label>
+                                            <input type="email" class="form-control" id="mail" placeholder="Email" required>
+                                            <label for="mail"><i class="fas fa-envelope me-2"></i>Email</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <textarea class="form-control" placeholder="Mensaje" id="contactoMensaje" style="height: 130px" required></textarea>
-                                            <label for="contactoMensaje">Mensaje</label>
+                                            <textarea class="form-control" placeholder="Mensaje" id="message" style="height: 140px" required></textarea>
+                                            <label for="message"><i class="fas fa-comment-dots me-2"></i>Mensaje</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="bi bi-send me-2"></i> Enviar Mensaje
+                                        <button type="button" onclick="correo()" class="btn btn-primary">
+                                            <i class="fas fa-paper-plane me-2"></i> Enviar Mensaje
                                         </button>
                                     </div>
                                 </div>
@@ -697,27 +1167,47 @@
     </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-4">
+    <footer class="text-white pt-5 pb-4">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <h5>Botanas Delicias</h5>
-                    <p>Los mejores sabores tradicionales en botanas.</p>
+            <div class="row gy-4">
+                <div class="col-lg-4">
+                    <h5 class="mb-3">
+                        <i class="bi bi-nut-fill me-2"></i>Furia Nuts
+                    </h5>
+                    <p class="mb-0" style="color:rgba(255,255,255,0.7);">Los mejores sabores tradicionales en botanas. Calidad y sabor en cada bocado.</p>
                 </div>
-                <div class="col-md-6 text-md-end">
-                    <h5>Síguenos</h5>
-                    <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-white me-2"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-white"><i class="bi bi-whatsapp"></i></a>
+                <div class="col-lg-4 text-center">
+                    <h5 class="mb-3">Enlaces</h5>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-1"><a href="#inicio" class="text-white-50 text-decoration-none">Inicio</a></li>
+                        <li class="mb-1"><a href="#productos" class="text-white-50 text-decoration-none">Productos</a></li>
+                        <li class="mb-1"><a href="#nosotros" class="text-white-50 text-decoration-none">Nosotros</a></li>
+                        <li><a href="#contacto" class="text-white-50 text-decoration-none">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 text-center text-lg-end">
+                    <h5 class="mb-3">Síguenos</h5>
+                    <div>
+                        <a href="#" class="social-icon"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-whatsapp"></i></a>
+                        <a href="#" class="social-icon"><i class="bi bi-tiktok"></i></a>
+                    </div>
                 </div>
             </div>
-            <div class="row mt-3">
+            <hr class="my-4" style="border-color:rgba(255,255,255,0.1);">
+            <div class="row">
                 <div class="col-12 text-center">
-                    <p class="mb-0">&copy; 2024 Botanas Delicias. Todos los derechos reservados.</p>
+                    <p class="mb-0" style="color:rgba(255,255,255,0.5); font-size:0.9rem;">&copy; 2024 Furia Nuts. Todos los derechos reservados.</p>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Floating WhatsApp -->
+    <a href="https://walink.co/e7dec1" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
 
     <!-- Offcanvas Carrito -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoOffcanvas" aria-labelledby="carritoOffcanvasLabel">
@@ -743,47 +1233,69 @@
         </div>
     </div>
 
-    <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100;">
-        <div id="toastAgregado" class="toast align-items-center" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="d-flex">
-                <div class="toast-body">
-                    <i class="bi bi-check-circle-fill text-success me-2"></i>
-                    <span id="toastAgregadoTexto">Agregado al carrito</span>
-                </div>
-                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Cerrar"></button>
-            </div>
-        </div>
-    </div>
+
 
     <!-- Bootstrap JS Bundle with Popper -->
-    <!-- Bootstrap Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script>
-        // Variables globales
+        toastr.options = {
+            closeButton: true,
+            progressBar: true,
+            positionClass: 'toast-bottom-right',
+            timeOut: 2500,
+            extendedTimeOut: 1000,
+            hideDuration: 300,
+            showDuration: 300,
+            preventDuplicates: true,
+        };
+
         let carrito = [];
-        
-        // Funciones del carrito
+
+        function actualizarIndicadores() {
+            document.querySelectorAll('#productos .card').forEach(card => {
+                const nombre = card.dataset.nombre;
+                const item = carrito.find(p => p.nombre === nombre);
+                const check = card.querySelector('.product-check');
+                const badge = card.querySelector('.cart-badge');
+                const count = card.querySelector('.count');
+
+                if (item && item.cantidad > 0) {
+                    card.classList.add('in-cart');
+                    check.classList.add('show');
+                    badge.classList.add('show');
+                    count.textContent = item.cantidad;
+                } else {
+                    card.classList.remove('in-cart');
+                    check.classList.remove('show');
+                    badge.classList.remove('show');
+                    count.textContent = '0';
+                }
+            });
+        }
+
         function actualizarCarrito() {
             const listaCarrito = document.getElementById('lista-carrito');
             const totalCarrito = document.getElementById('total-carrito');
             const contadorCarrito = document.getElementById('contador-carrito');
-            
-            // Limpiar lista
+
             listaCarrito.innerHTML = '';
-            
+
             if (carrito.length === 0) {
-                listaCarrito.innerHTML = '<p class="text-muted text-center">Tu carrito está vacío</p>';
+                listaCarrito.innerHTML = '<p class="text-muted text-center py-4">Tu carrito está vacío</p>';
                 totalCarrito.textContent = '$0.00';
                 contadorCarrito.textContent = '0';
+                actualizarIndicadores();
                 return;
             }
-            
-            // Calcular total y mostrar productos
+
             let total = 0;
             carrito.forEach((producto, index) => {
                 total += producto.precio * producto.cantidad;
-                
+
                 const productoHTML = `
                     <div class="card mb-2">
                         <div class="card-body p-2">
@@ -795,7 +1307,7 @@
                                     <small class="text-muted">Precio: $${producto.precio.toFixed(2)} c/u</small>
                                 </div>
                                 <div class="d-flex align-items-center">
-                                    <span class="me-2">$${(producto.precio * producto.cantidad).toFixed(2)}</span>
+                                    <span class="me-2 fw-bold" style="color:var(--accent-color);">$${(producto.precio * producto.cantidad).toFixed(2)}</span>
                                     <button class="btn btn-sm btn-outline-danger" onclick="eliminarDelCarrito(${index})">
                                         <i class="bi bi-trash"></i>
                                     </button>
@@ -806,40 +1318,38 @@
                 `;
                 listaCarrito.insertAdjacentHTML('beforeend', productoHTML);
             });
-            
+
             totalCarrito.textContent = `$${total.toFixed(2)}`;
             contadorCarrito.textContent = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+            actualizarIndicadores();
         }
-        
+
         function agregarAlCarrito(nombre, precio) {
             const productoExistente = carrito.find(p => p.nombre === nombre);
-            
+
             if (productoExistente) {
                 productoExistente.cantidad += 1;
+                toastr.success(`<strong>${nombre}</strong> — Ahora llevas ${productoExistente.cantidad}`, 'Producto actualizado');
             } else {
                 carrito.push({
                     nombre: nombre,
                     precio: precio,
                     cantidad: 1
                 });
+                toastr.success(`<strong>${nombre}</strong> agregado al carrito`, 'Producto añadido');
             }
-            
+
             actualizarCarrito();
-            // Mostrar notificación
-            const toastEl = document.getElementById('toastAgregado');
-            const toastTextoEl = document.getElementById('toastAgregadoTexto');
-            if (toastTextoEl) toastTextoEl.textContent = `${nombre} agregado al carrito`;
-            if (toastEl) {
-                const toast = bootstrap.Toast.getOrCreateInstance(toastEl, { delay: 2500 });
-                toast.show();
-            }
         }
-        
+
         function eliminarDelCarrito(index) {
+            const nombre = carrito[index].nombre;
             if (carrito[index].cantidad > 1) {
                 carrito[index].cantidad -= 1;
+                toastr.info(`<strong>${nombre}</strong> — Queda${carrito[index].cantidad > 1 ? 'n' : ''} ${carrito[index].cantidad}`, 'Cantidad reducida');
             } else {
                 carrito.splice(index, 1);
+                toastr.warning(`<strong>${nombre}</strong> eliminado del carrito`, 'Producto removido');
             }
             actualizarCarrito();
         }
@@ -977,6 +1487,53 @@
             updateActiveLink();
             window.addEventListener('scroll', updateActiveLink);
         });
+
+        AOS.init({
+            duration: 600,
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+
+        window.onload = function () {
+            emailjs.init('m202FJpgz8JlMhJrh');
+        };
+
+        function correo() {
+            let $nombre = document.getElementById('name').value;
+            let $telefono = document.getElementById('phone').value;
+            let $mail = document.getElementById('mail').value;
+            let $mensaje = document.getElementById('message').value;
+            let $error = document.getElementById('error');
+            let $success = document.getElementById('success');
+
+            if ($nombre === '' || $telefono === '' || $mensaje === '') {
+                $error.classList.remove('d-none');
+                setTimeout(() => { $error.classList.add('d-none'); }, 4000);
+                return;
+            }
+
+            let parametros = {
+                to_email: 'resendiz.galleta@gmail.com',
+                name: $nombre,
+                phone: $telefono,
+                email: $mail,
+                message: $mensaje
+            };
+
+            console.log(parametros)
+
+            emailjs.send('service_9m5rcfq', 'template_cfgl7gs', parametros)
+                .then(response => {
+                    $success.classList.remove('d-none');
+                    setTimeout(() => { $success.classList.add('d-none'); }, 4000);
+                    document.getElementById('name').value = '';
+                    document.getElementById('phone').value = '';
+                    document.getElementById('mail').value = '';
+                    document.getElementById('message').value = '';
+                }, error => {
+                    alert('El correo no se envió');
+                });
+        }
     </script>
 </body>
 </html>
